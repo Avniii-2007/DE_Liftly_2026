@@ -1,0 +1,31 @@
+{
+  "team_no": "T0062",
+  "section": "B",
+  "repository_url": "https://github.com/Avniii-2007/DE_Liftly_2026.git",
+  "members": [
+    {
+      "role": "Group Lead",
+      "name": "Avni",
+      "enrollment_no": "2501010545",
+      "github_username": "Avniii-2007"
+    },
+    {
+      "role": "Member 2",
+      "name": "Jyoti",
+      "enrollment_no": "2501010207",
+      "github_username": "Jyotikesari"
+    },
+    {
+      "role": "Member 3",
+      "name": "Arjun Verma",
+      "enrollment_no": "2501010693",
+      "github_username": "heeccker"
+    },
+    {
+      "role": "Member 4",
+      "name": "Vani Dhull",
+      "enrollment_no": "2501010492",
+      "github_username": "vanidhull28-sketch"
+    }
+  ]
+}
