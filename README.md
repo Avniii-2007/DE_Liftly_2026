@@ -22,12 +22,12 @@
 
 | Role | Name | Enrollment No. | GitHub Username |
 |------|------|----------------|-----------------|
-| Group Lead | | | |
-| Member 2 | | | |
-| Member 3 | | | |
-| Member 4 | | | |
+| Group Lead |Avni | 2501010545| Avniii-2007|
+| Member 2 |Jyoti |2501010207 |Jyotikesari |
+| Member 3 |Arjun Verma |2501010693 | heeccker |
+| Member 4 |Vani Dhull |2501010492 | vanidhull28-sketch|
 
-**Team No.:** ____ · **Section:** ____ · **Repository URL:** ____
+**Team No.:** T0062 · **Section:** B · **Repository URL:** https://github.com/Avniii-2007/DE_Liftly_2026.git
 
 ---
 
