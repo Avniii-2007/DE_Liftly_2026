@@ -1,0 +1,60 @@
+=== R16 run 1 ===
+Sort  (cost=3224.16..3224.17 rows=4 width=12) (actual time=4.372..4.373 rows=3.00 loops=1)
+  Sort Key: (count(*)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=1166
+  ->  GroupAggregate  (cost=3223.43..3224.12 rows=4 width=12) (actual time=4.364..4.366 rows=3.00 loops=1)
+        Group Key: method
+        Buffers: shared hit=1163
+        ->  Sort  (cost=3223.43..3223.65 rows=86 width=4) (actual time=4.360..4.361 rows=82.00 loops=1)
+              Sort Key: method
+              Sort Method: quicksort  Memory: 25kB
+              Buffers: shared hit=1163
+              ->  Seq Scan on payments  (cost=0.00..3220.67 rows=86 width=4) (actual time=4.267..4.337 rows=82.00 loops=1)
+                    Filter: ((attempted_at >= '2026-06-24 00:00:00+05:30'::timestamp with time zone) AND ((payment_status)::text = 'FAILED'::text))
+                    Rows Removed by Filter: 137296
+                    Buffers: shared hit=1160
+Planning:
+  Buffers: shared hit=112
+Planning Time: 0.331 ms
+Execution Time: 4.397 ms
+=== R16 run 2 ===
+Sort  (cost=3224.16..3224.17 rows=4 width=12) (actual time=3.726..3.726 rows=3.00 loops=1)
+  Sort Key: (count(*)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=1166
+  ->  GroupAggregate  (cost=3223.43..3224.12 rows=4 width=12) (actual time=3.718..3.720 rows=3.00 loops=1)
+        Group Key: method
+        Buffers: shared hit=1163
+        ->  Sort  (cost=3223.43..3223.65 rows=86 width=4) (actual time=3.713..3.715 rows=82.00 loops=1)
+              Sort Key: method
+              Sort Method: quicksort  Memory: 25kB
+              Buffers: shared hit=1163
+              ->  Seq Scan on payments  (cost=0.00..3220.67 rows=86 width=4) (actual time=3.635..3.692 rows=82.00 loops=1)
+                    Filter: ((attempted_at >= '2026-06-24 00:00:00+05:30'::timestamp with time zone) AND ((payment_status)::text = 'FAILED'::text))
+                    Rows Removed by Filter: 137296
+                    Buffers: shared hit=1160
+Planning:
+  Buffers: shared hit=112
+Planning Time: 0.161 ms
+Execution Time: 3.748 ms
+=== R16 run 3 ===
+Sort  (cost=3224.16..3224.17 rows=4 width=12) (actual time=3.656..3.656 rows=3.00 loops=1)
+  Sort Key: (count(*)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=1166
+  ->  GroupAggregate  (cost=3223.43..3224.12 rows=4 width=12) (actual time=3.648..3.650 rows=3.00 loops=1)
+        Group Key: method
+        Buffers: shared hit=1163
+        ->  Sort  (cost=3223.43..3223.65 rows=86 width=4) (actual time=3.643..3.645 rows=82.00 loops=1)
+              Sort Key: method
+              Sort Method: quicksort  Memory: 25kB
+              Buffers: shared hit=1163
+              ->  Seq Scan on payments  (cost=0.00..3220.67 rows=86 width=4) (actual time=3.566..3.623 rows=82.00 loops=1)
+                    Filter: ((attempted_at >= '2026-06-24 00:00:00+05:30'::timestamp with time zone) AND ((payment_status)::text = 'FAILED'::text))
+                    Rows Removed by Filter: 137296
+                    Buffers: shared hit=1160
+Planning:
+  Buffers: shared hit=112
+Planning Time: 0.173 ms
+Execution Time: 3.686 ms

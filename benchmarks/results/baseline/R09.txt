@@ -1,0 +1,111 @@
+=== R09 run 1 ===
+GroupAggregate  (cost=4958.07..5053.43 rows=651 width=44) (actual time=14.705..22.352 rows=60.00 loops=1)
+  Group Key: l.city_id, (date_trunc('month'::text, o.placed_at))
+  Buffers: shared hit=2399
+  ->  Gather Merge  (cost=4958.07..5032.27 rows=651 width=28) (actual time=14.495..17.047 rows=43141.00 loops=1)
+        Workers Planned: 1
+        Workers Launched: 1
+        Buffers: shared hit=2399
+        ->  Sort  (cost=3958.06..3959.02 rows=383 width=28) (actual time=13.625..14.041 rows=21570.50 loops=2)
+              Sort Key: l.city_id, (date_trunc('month'::text, o.placed_at))
+              Sort Method: quicksort  Memory: 1778kB
+              Buffers: shared hit=2399
+              Worker 0:  Sort Method: quicksort  Memory: 1782kB
+              ->  Hash Join  (cost=106.50..3941.63 rows=383 width=28) (actual time=5.403..12.061 rows=21570.50 loops=2)
+                    Hash Cond: (r.locality_id = l.locality_id)
+                    Buffers: shared hit=2384
+                    ->  Hash Join  (cost=103.25..3936.37 rows=383 width=20) (actual time=5.381..9.674 rows=21570.50 loops=2)
+                          Hash Cond: (o.restaurant_id = r.restaurant_id)
+                          Buffers: shared hit=2382
+                          ->  Parallel Seq Scan on orders o  (cost=0.00..3832.12 rows=383 width=20) (actual time=5.170..7.990 rows=21570.50 loops=2)
+                                Filter: (((status)::text = 'DELIVERED'::text) AND (EXTRACT(year FROM placed_at) = '2026'::numeric))
+                                Rows Removed by Filter: 53430
+                                Buffers: shared hit=2288
+                          ->  Hash  (cost=72.00..72.00 rows=2500 width=8) (actual time=0.205..0.206 rows=2500.00 loops=2)
+                                Buckets: 4096  Batches: 1  Memory Usage: 130kB
+                                Buffers: shared hit=94
+                                ->  Seq Scan on restaurants r  (cost=0.00..72.00 rows=2500 width=8) (actual time=0.011..0.120 rows=2500.00 loops=2)
+                                      Buffers: shared hit=94
+                    ->  Hash  (cost=2.00..2.00 rows=100 width=8) (actual time=0.018..0.019 rows=100.00 loops=2)
+                          Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                          Buffers: shared hit=2
+                          ->  Seq Scan on localities l  (cost=0.00..2.00 rows=100 width=8) (actual time=0.010..0.013 rows=100.00 loops=2)
+                                Buffers: shared hit=2
+Planning:
+  Buffers: shared hit=231
+Planning Time: 0.366 ms
+Execution Time: 22.393 ms
+=== R09 run 2 ===
+GroupAggregate  (cost=4958.07..5053.43 rows=651 width=44) (actual time=14.439..21.776 rows=60.00 loops=1)
+  Group Key: l.city_id, (date_trunc('month'::text, o.placed_at))
+  Buffers: shared hit=2399
+  ->  Gather Merge  (cost=4958.07..5032.27 rows=651 width=28) (actual time=14.217..16.600 rows=43141.00 loops=1)
+        Workers Planned: 1
+        Workers Launched: 1
+        Buffers: shared hit=2399
+        ->  Sort  (cost=3958.06..3959.02 rows=383 width=28) (actual time=13.388..13.780 rows=21570.50 loops=2)
+              Sort Key: l.city_id, (date_trunc('month'::text, o.placed_at))
+              Sort Method: quicksort  Memory: 1793kB
+              Buffers: shared hit=2399
+              Worker 0:  Sort Method: quicksort  Memory: 1766kB
+              ->  Hash Join  (cost=106.50..3941.63 rows=383 width=28) (actual time=5.158..11.845 rows=21570.50 loops=2)
+                    Hash Cond: (r.locality_id = l.locality_id)
+                    Buffers: shared hit=2384
+                    ->  Hash Join  (cost=103.25..3936.37 rows=383 width=20) (actual time=5.137..9.392 rows=21570.50 loops=2)
+                          Hash Cond: (o.restaurant_id = r.restaurant_id)
+                          Buffers: shared hit=2382
+                          ->  Parallel Seq Scan on orders o  (cost=0.00..3832.12 rows=383 width=20) (actual time=4.929..7.741 rows=21570.50 loops=2)
+                                Filter: (((status)::text = 'DELIVERED'::text) AND (EXTRACT(year FROM placed_at) = '2026'::numeric))
+                                Rows Removed by Filter: 53430
+                                Buffers: shared hit=2288
+                          ->  Hash  (cost=72.00..72.00 rows=2500 width=8) (actual time=0.201..0.202 rows=2500.00 loops=2)
+                                Buckets: 4096  Batches: 1  Memory Usage: 130kB
+                                Buffers: shared hit=94
+                                ->  Seq Scan on restaurants r  (cost=0.00..72.00 rows=2500 width=8) (actual time=0.014..0.117 rows=2500.00 loops=2)
+                                      Buffers: shared hit=94
+                    ->  Hash  (cost=2.00..2.00 rows=100 width=8) (actual time=0.017..0.018 rows=100.00 loops=2)
+                          Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                          Buffers: shared hit=2
+                          ->  Seq Scan on localities l  (cost=0.00..2.00 rows=100 width=8) (actual time=0.009..0.012 rows=100.00 loops=2)
+                                Buffers: shared hit=2
+Planning:
+  Buffers: shared hit=231
+Planning Time: 0.355 ms
+Execution Time: 21.814 ms
+=== R09 run 3 ===
+GroupAggregate  (cost=4958.07..5053.43 rows=651 width=44) (actual time=14.824..22.743 rows=60.00 loops=1)
+  Group Key: l.city_id, (date_trunc('month'::text, o.placed_at))
+  Buffers: shared hit=2399
+  ->  Gather Merge  (cost=4958.07..5032.27 rows=651 width=28) (actual time=14.583..17.212 rows=43141.00 loops=1)
+        Workers Planned: 1
+        Workers Launched: 1
+        Buffers: shared hit=2399
+        ->  Sort  (cost=3958.06..3959.02 rows=383 width=28) (actual time=13.732..14.179 rows=21570.50 loops=2)
+              Sort Key: l.city_id, (date_trunc('month'::text, o.placed_at))
+              Sort Method: quicksort  Memory: 1781kB
+              Buffers: shared hit=2399
+              Worker 0:  Sort Method: quicksort  Memory: 1778kB
+              ->  Hash Join  (cost=106.50..3941.63 rows=383 width=28) (actual time=5.196..12.096 rows=21570.50 loops=2)
+                    Hash Cond: (r.locality_id = l.locality_id)
+                    Buffers: shared hit=2384
+                    ->  Hash Join  (cost=103.25..3936.37 rows=383 width=20) (actual time=5.174..9.651 rows=21570.50 loops=2)
+                          Hash Cond: (o.restaurant_id = r.restaurant_id)
+                          Buffers: shared hit=2382
+                          ->  Parallel Seq Scan on orders o  (cost=0.00..3832.12 rows=383 width=20) (actual time=4.961..7.964 rows=21570.50 loops=2)
+                                Filter: (((status)::text = 'DELIVERED'::text) AND (EXTRACT(year FROM placed_at) = '2026'::numeric))
+                                Rows Removed by Filter: 53430
+                                Buffers: shared hit=2288
+                          ->  Hash  (cost=72.00..72.00 rows=2500 width=8) (actual time=0.208..0.208 rows=2500.00 loops=2)
+                                Buckets: 4096  Batches: 1  Memory Usage: 130kB
+                                Buffers: shared hit=94
+                                ->  Seq Scan on restaurants r  (cost=0.00..72.00 rows=2500 width=8) (actual time=0.010..0.115 rows=2500.00 loops=2)
+                                      Buffers: shared hit=94
+                    ->  Hash  (cost=2.00..2.00 rows=100 width=8) (actual time=0.018..0.018 rows=100.00 loops=2)
+                          Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                          Buffers: shared hit=2
+                          ->  Seq Scan on localities l  (cost=0.00..2.00 rows=100 width=8) (actual time=0.009..0.012 rows=100.00 loops=2)
+                                Buffers: shared hit=2
+Planning:
+  Buffers: shared hit=231
+Planning Time: 0.349 ms
+Execution Time: 22.785 ms

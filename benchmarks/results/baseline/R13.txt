@@ -1,0 +1,42 @@
+=== R13 run 1 ===
+Seq Scan on delivery_partners p  (cost=4167.05..4225.05 rows=141 width=27) (actual time=5.604..5.605 rows=0.00 loops=1)
+  Filter: ((NOT (ANY (partner_id = (hashed SubPlan 1).col1))) AND (city_id = 1) AND ((status)::text = 'ACTIVE'::text))
+  Rows Removed by Filter: 2000
+  Buffers: shared hit=2311
+  SubPlan 1
+    ->  Seq Scan on orders o  (cost=0.00..4163.00 rows=1621 width=4) (actual time=5.245..5.330 rows=1648.00 loops=1)
+          Filter: (placed_at >= '2026-06-25 00:00:00+05:30'::timestamp with time zone)
+          Rows Removed by Filter: 148352
+          Buffers: shared hit=2288
+Planning:
+  Buffers: shared hit=124
+Planning Time: 0.239 ms
+Execution Time: 5.627 ms
+=== R13 run 2 ===
+Seq Scan on delivery_partners p  (cost=4167.05..4225.05 rows=141 width=27) (actual time=5.585..5.585 rows=0.00 loops=1)
+  Filter: ((NOT (ANY (partner_id = (hashed SubPlan 1).col1))) AND (city_id = 1) AND ((status)::text = 'ACTIVE'::text))
+  Rows Removed by Filter: 2000
+  Buffers: shared hit=2311
+  SubPlan 1
+    ->  Seq Scan on orders o  (cost=0.00..4163.00 rows=1621 width=4) (actual time=5.248..5.327 rows=1648.00 loops=1)
+          Filter: (placed_at >= '2026-06-25 00:00:00+05:30'::timestamp with time zone)
+          Rows Removed by Filter: 148352
+          Buffers: shared hit=2288
+Planning:
+  Buffers: shared hit=124
+Planning Time: 0.204 ms
+Execution Time: 5.607 ms
+=== R13 run 3 ===
+Seq Scan on delivery_partners p  (cost=4167.05..4225.05 rows=141 width=27) (actual time=5.532..5.533 rows=0.00 loops=1)
+  Filter: ((NOT (ANY (partner_id = (hashed SubPlan 1).col1))) AND (city_id = 1) AND ((status)::text = 'ACTIVE'::text))
+  Rows Removed by Filter: 2000
+  Buffers: shared hit=2311
+  SubPlan 1
+    ->  Seq Scan on orders o  (cost=0.00..4163.00 rows=1621 width=4) (actual time=5.197..5.278 rows=1648.00 loops=1)
+          Filter: (placed_at >= '2026-06-25 00:00:00+05:30'::timestamp with time zone)
+          Rows Removed by Filter: 148352
+          Buffers: shared hit=2288
+Planning:
+  Buffers: shared hit=124
+Planning Time: 0.243 ms
+Execution Time: 5.558 ms

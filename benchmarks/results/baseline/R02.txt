@@ -1,0 +1,99 @@
+=== R02 run 1 ===
+Limit  (cost=1204.72..1204.84 rows=50 width=37) (actual time=23.092..23.098 rows=50.00 loops=1)
+  Buffers: shared hit=507
+  ->  Sort  (cost=1204.72..1205.94 rows=488 width=37) (actual time=23.091..23.095 rows=50.00 loops=1)
+        Sort Key: m.price
+        Sort Method: top-N heapsort  Memory: 30kB
+        Buffers: shared hit=507
+        ->  Hash Join  (cost=84.34..1188.51 rows=488 width=37) (actual time=0.403..22.916 rows=802.00 loops=1)
+              Hash Cond: (m.restaurant_id = r.restaurant_id)
+              Buffers: shared hit=504
+              ->  Seq Scan on menu_items m  (cost=0.00..1081.00 rows=4876 width=26) (actual time=0.012..22.238 rows=4921.00 loops=1)
+                    Filter: (is_available AND ((item_name)::text ~~* '%paneer%'::text))
+                    Rows Removed by Filter: 45079
+                    Buffers: shared hit=456
+              ->  Hash  (cost=81.22..81.22 rows=250 width=19) (actual time=0.269..0.270 rows=400.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 29kB
+                    Buffers: shared hit=48
+                    ->  Hash Join  (cost=2.38..81.22 rows=250 width=19) (actual time=0.019..0.243 rows=400.00 loops=1)
+                          Hash Cond: (r.locality_id = l.locality_id)
+                          Buffers: shared hit=48
+                          ->  Seq Scan on restaurants r  (cost=0.00..72.00 rows=2500 width=23) (actual time=0.003..0.097 rows=2500.00 loops=1)
+                                Buffers: shared hit=47
+                          ->  Hash  (cost=2.25..2.25 rows=10 width=4) (actual time=0.011..0.011 rows=10.00 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                Buffers: shared hit=1
+                                ->  Seq Scan on localities l  (cost=0.00..2.25 rows=10 width=4) (actual time=0.003..0.006 rows=10.00 loops=1)
+                                      Filter: (city_id = 1)
+                                      Rows Removed by Filter: 90
+                                      Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=277
+Planning Time: 1.655 ms
+Execution Time: 23.135 ms
+=== R02 run 2 ===
+Limit  (cost=1204.72..1204.84 rows=50 width=37) (actual time=17.382..17.386 rows=50.00 loops=1)
+  Buffers: shared hit=507
+  ->  Sort  (cost=1204.72..1205.94 rows=488 width=37) (actual time=17.382..17.384 rows=50.00 loops=1)
+        Sort Key: m.price
+        Sort Method: top-N heapsort  Memory: 30kB
+        Buffers: shared hit=507
+        ->  Hash Join  (cost=84.34..1188.51 rows=488 width=37) (actual time=0.376..17.250 rows=802.00 loops=1)
+              Hash Cond: (m.restaurant_id = r.restaurant_id)
+              Buffers: shared hit=504
+              ->  Seq Scan on menu_items m  (cost=0.00..1081.00 rows=4876 width=26) (actual time=0.008..16.674 rows=4921.00 loops=1)
+                    Filter: (is_available AND ((item_name)::text ~~* '%paneer%'::text))
+                    Rows Removed by Filter: 45079
+                    Buffers: shared hit=456
+              ->  Hash  (cost=81.22..81.22 rows=250 width=19) (actual time=0.257..0.257 rows=400.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 29kB
+                    Buffers: shared hit=48
+                    ->  Hash Join  (cost=2.38..81.22 rows=250 width=19) (actual time=0.016..0.231 rows=400.00 loops=1)
+                          Hash Cond: (r.locality_id = l.locality_id)
+                          Buffers: shared hit=48
+                          ->  Seq Scan on restaurants r  (cost=0.00..72.00 rows=2500 width=23) (actual time=0.003..0.092 rows=2500.00 loops=1)
+                                Buffers: shared hit=47
+                          ->  Hash  (cost=2.25..2.25 rows=10 width=4) (actual time=0.009..0.009 rows=10.00 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                Buffers: shared hit=1
+                                ->  Seq Scan on localities l  (cost=0.00..2.25 rows=10 width=4) (actual time=0.003..0.005 rows=10.00 loops=1)
+                                      Filter: (city_id = 1)
+                                      Rows Removed by Filter: 90
+                                      Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=277
+Planning Time: 0.513 ms
+Execution Time: 17.417 ms
+=== R02 run 3 ===
+Limit  (cost=1204.72..1204.84 rows=50 width=37) (actual time=14.989..14.993 rows=50.00 loops=1)
+  Buffers: shared hit=507
+  ->  Sort  (cost=1204.72..1205.94 rows=488 width=37) (actual time=14.989..14.990 rows=50.00 loops=1)
+        Sort Key: m.price
+        Sort Method: top-N heapsort  Memory: 30kB
+        Buffers: shared hit=507
+        ->  Hash Join  (cost=84.34..1188.51 rows=488 width=37) (actual time=0.312..14.870 rows=802.00 loops=1)
+              Hash Cond: (m.restaurant_id = r.restaurant_id)
+              Buffers: shared hit=504
+              ->  Seq Scan on menu_items m  (cost=0.00..1081.00 rows=4876 width=26) (actual time=0.007..14.386 rows=4921.00 loops=1)
+                    Filter: (is_available AND ((item_name)::text ~~* '%paneer%'::text))
+                    Rows Removed by Filter: 45079
+                    Buffers: shared hit=456
+              ->  Hash  (cost=81.22..81.22 rows=250 width=19) (actual time=0.215..0.215 rows=400.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 29kB
+                    Buffers: shared hit=48
+                    ->  Hash Join  (cost=2.38..81.22 rows=250 width=19) (actual time=0.013..0.193 rows=400.00 loops=1)
+                          Hash Cond: (r.locality_id = l.locality_id)
+                          Buffers: shared hit=48
+                          ->  Seq Scan on restaurants r  (cost=0.00..72.00 rows=2500 width=23) (actual time=0.002..0.081 rows=2500.00 loops=1)
+                                Buffers: shared hit=47
+                          ->  Hash  (cost=2.25..2.25 rows=10 width=4) (actual time=0.008..0.008 rows=10.00 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                Buffers: shared hit=1
+                                ->  Seq Scan on localities l  (cost=0.00..2.25 rows=10 width=4) (actual time=0.002..0.004 rows=10.00 loops=1)
+                                      Filter: (city_id = 1)
+                                      Rows Removed by Filter: 90
+                                      Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=277
+Planning Time: 0.410 ms
+Execution Time: 15.019 ms

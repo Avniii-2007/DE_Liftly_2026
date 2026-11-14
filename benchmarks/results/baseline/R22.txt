@@ -1,0 +1,102 @@
+=== R22 run 1 ===
+GroupAggregate  (cost=4783.15..4821.30 rows=1526 width=72) (actual time=12.521..12.705 rows=168.00 loops=1)
+  Group Key: (EXTRACT(isodow FROM o.placed_at)), (EXTRACT(hour FROM o.placed_at))
+  Buffers: shared hit=2339
+  ->  Sort  (cost=4783.15..4786.96 rows=1526 width=64) (actual time=12.517..12.558 rows=2500.00 loops=1)
+        Sort Key: (EXTRACT(isodow FROM o.placed_at)), (EXTRACT(hour FROM o.placed_at))
+        Sort Method: quicksort  Memory: 174kB
+        Buffers: shared hit=2339
+        ->  Hash Join  (cost=84.34..4702.46 rows=1526 width=64) (actual time=9.755..11.800 rows=2500.00 loops=1)
+              Hash Cond: (o.restaurant_id = r.restaurant_id)
+              Buffers: shared hit=2336
+              ->  Seq Scan on orders o  (cost=0.00..4538.00 rows=15260 width=12) (actual time=9.549..10.941 rows=15384.00 loops=1)
+                    Filter: (placed_at >= ('2026-07-01 00:00:00+05:30'::timestamp with time zone - '56 days'::interval))
+                    Rows Removed by Filter: 134616
+                    Buffers: shared hit=2288
+              ->  Hash  (cost=81.22..81.22 rows=250 width=4) (actual time=0.195..0.195 rows=400.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                    Buffers: shared hit=48
+                    ->  Hash Join  (cost=2.38..81.22 rows=250 width=4) (actual time=0.016..0.180 rows=400.00 loops=1)
+                          Hash Cond: (r.locality_id = l.locality_id)
+                          Buffers: shared hit=48
+                          ->  Seq Scan on restaurants r  (cost=0.00..72.00 rows=2500 width=8) (actual time=0.004..0.072 rows=2500.00 loops=1)
+                                Buffers: shared hit=47
+                          ->  Hash  (cost=2.25..2.25 rows=10 width=4) (actual time=0.008..0.009 rows=10.00 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                Buffers: shared hit=1
+                                ->  Seq Scan on localities l  (cost=0.00..2.25 rows=10 width=4) (actual time=0.003..0.005 rows=10.00 loops=1)
+                                      Filter: (city_id = 1)
+                                      Rows Removed by Filter: 90
+                                      Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=288
+Planning Time: 0.433 ms
+Execution Time: 12.751 ms
+=== R22 run 2 ===
+GroupAggregate  (cost=4783.15..4821.30 rows=1526 width=72) (actual time=12.471..12.665 rows=168.00 loops=1)
+  Group Key: (EXTRACT(isodow FROM o.placed_at)), (EXTRACT(hour FROM o.placed_at))
+  Buffers: shared hit=2339
+  ->  Sort  (cost=4783.15..4786.96 rows=1526 width=64) (actual time=12.466..12.510 rows=2500.00 loops=1)
+        Sort Key: (EXTRACT(isodow FROM o.placed_at)), (EXTRACT(hour FROM o.placed_at))
+        Sort Method: quicksort  Memory: 174kB
+        Buffers: shared hit=2339
+        ->  Hash Join  (cost=84.34..4702.46 rows=1526 width=64) (actual time=9.587..11.735 rows=2500.00 loops=1)
+              Hash Cond: (o.restaurant_id = r.restaurant_id)
+              Buffers: shared hit=2336
+              ->  Seq Scan on orders o  (cost=0.00..4538.00 rows=15260 width=12) (actual time=9.385..10.846 rows=15384.00 loops=1)
+                    Filter: (placed_at >= ('2026-07-01 00:00:00+05:30'::timestamp with time zone - '56 days'::interval))
+                    Rows Removed by Filter: 134616
+                    Buffers: shared hit=2288
+              ->  Hash  (cost=81.22..81.22 rows=250 width=4) (actual time=0.193..0.193 rows=400.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                    Buffers: shared hit=48
+                    ->  Hash Join  (cost=2.38..81.22 rows=250 width=4) (actual time=0.014..0.179 rows=400.00 loops=1)
+                          Hash Cond: (r.locality_id = l.locality_id)
+                          Buffers: shared hit=48
+                          ->  Seq Scan on restaurants r  (cost=0.00..72.00 rows=2500 width=8) (actual time=0.003..0.071 rows=2500.00 loops=1)
+                                Buffers: shared hit=47
+                          ->  Hash  (cost=2.25..2.25 rows=10 width=4) (actual time=0.008..0.008 rows=10.00 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                Buffers: shared hit=1
+                                ->  Seq Scan on localities l  (cost=0.00..2.25 rows=10 width=4) (actual time=0.002..0.004 rows=10.00 loops=1)
+                                      Filter: (city_id = 1)
+                                      Rows Removed by Filter: 90
+                                      Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=288
+Planning Time: 0.419 ms
+Execution Time: 12.701 ms
+=== R22 run 3 ===
+GroupAggregate  (cost=4783.15..4821.30 rows=1526 width=72) (actual time=12.548..12.741 rows=168.00 loops=1)
+  Group Key: (EXTRACT(isodow FROM o.placed_at)), (EXTRACT(hour FROM o.placed_at))
+  Buffers: shared hit=2339
+  ->  Sort  (cost=4783.15..4786.96 rows=1526 width=64) (actual time=12.544..12.586 rows=2500.00 loops=1)
+        Sort Key: (EXTRACT(isodow FROM o.placed_at)), (EXTRACT(hour FROM o.placed_at))
+        Sort Method: quicksort  Memory: 174kB
+        Buffers: shared hit=2339
+        ->  Hash Join  (cost=84.34..4702.46 rows=1526 width=64) (actual time=9.555..11.724 rows=2500.00 loops=1)
+              Hash Cond: (o.restaurant_id = r.restaurant_id)
+              Buffers: shared hit=2336
+              ->  Seq Scan on orders o  (cost=0.00..4538.00 rows=15260 width=12) (actual time=9.358..10.836 rows=15384.00 loops=1)
+                    Filter: (placed_at >= ('2026-07-01 00:00:00+05:30'::timestamp with time zone - '56 days'::interval))
+                    Rows Removed by Filter: 134616
+                    Buffers: shared hit=2288
+              ->  Hash  (cost=81.22..81.22 rows=250 width=4) (actual time=0.180..0.180 rows=400.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                    Buffers: shared hit=48
+                    ->  Hash Join  (cost=2.38..81.22 rows=250 width=4) (actual time=0.014..0.165 rows=400.00 loops=1)
+                          Hash Cond: (r.locality_id = l.locality_id)
+                          Buffers: shared hit=48
+                          ->  Seq Scan on restaurants r  (cost=0.00..72.00 rows=2500 width=8) (actual time=0.004..0.068 rows=2500.00 loops=1)
+                                Buffers: shared hit=47
+                          ->  Hash  (cost=2.25..2.25 rows=10 width=4) (actual time=0.007..0.008 rows=10.00 loops=1)
+                                Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                Buffers: shared hit=1
+                                ->  Seq Scan on localities l  (cost=0.00..2.25 rows=10 width=4) (actual time=0.002..0.004 rows=10.00 loops=1)
+                                      Filter: (city_id = 1)
+                                      Rows Removed by Filter: 90
+                                      Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=288
+Planning Time: 0.386 ms
+Execution Time: 12.776 ms

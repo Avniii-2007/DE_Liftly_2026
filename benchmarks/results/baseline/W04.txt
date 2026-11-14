@@ -1,0 +1,69 @@
+=== W04 run 1 ===
+Update on restaurants r  (cost=1116.38..1206.90 rows=0 width=0) (actual time=9.455..9.456 rows=0.00 loops=1)
+  Buffers: shared hit=17329 dirtied=108 written=53
+  ->  Hash Join  (cost=1116.38..1206.90 rows=2390 width=90) (actual time=4.329..4.757 rows=2390.00 loops=1)
+        Hash Cond: (r.restaurant_id = s.restaurant_id)
+        Buffers: shared hit=388
+        ->  Seq Scan on restaurants r  (cost=0.00..72.00 rows=2500 width=10) (actual time=0.004..0.138 rows=2500.00 loops=1)
+              Buffers: shared hit=47
+        ->  Hash  (cost=1086.50..1086.50 rows=2390 width=112) (actual time=4.311..4.312 rows=2390.00 loops=1)
+              Buckets: 4096  Batches: 1  Memory Usage: 266kB
+              Buffers: shared hit=341
+              ->  Subquery Scan on s  (cost=1026.75..1086.50 rows=2390 width=112) (actual time=3.709..4.163 rows=2390.00 loops=1)
+                    Buffers: shared hit=341
+                    ->  HashAggregate  (cost=1026.75..1062.60 rows=2390 width=44) (actual time=3.703..4.016 rows=2390.00 loops=1)
+                          Group Key: reviews.restaurant_id
+                          Batches: 1  Memory Usage: 593kB
+                          Buffers: shared hit=341
+                          ->  Seq Scan on reviews  (cost=0.00..732.86 rows=39186 width=6) (actual time=0.003..0.927 rows=39186.00 loops=1)
+                                Buffers: shared hit=341
+Planning:
+  Buffers: shared hit=137
+Planning Time: 0.271 ms
+Execution Time: 9.544 ms
+=== W04 run 2 ===
+Update on restaurants r  (cost=1116.38..1282.13 rows=0 width=0) (actual time=8.623..8.624 rows=0.00 loops=1)
+  Buffers: shared hit=18637 dirtied=45 written=45
+  ->  Hash Join  (cost=1116.38..1282.13 rows=2390 width=90) (actual time=4.317..4.769 rows=2390.00 loops=1)
+        Hash Cond: (r.restaurant_id = s.restaurant_id)
+        Buffers: shared hit=433
+        ->  Seq Scan on restaurants r  (cost=0.00..140.94 rows=4894 width=10) (actual time=0.006..0.163 rows=2500.00 loops=1)
+              Buffers: shared hit=92
+        ->  Hash  (cost=1086.50..1086.50 rows=2390 width=112) (actual time=4.305..4.305 rows=2390.00 loops=1)
+              Buckets: 4096  Batches: 1  Memory Usage: 266kB
+              Buffers: shared hit=341
+              ->  Subquery Scan on s  (cost=1026.75..1086.50 rows=2390 width=112) (actual time=3.708..4.157 rows=2390.00 loops=1)
+                    Buffers: shared hit=341
+                    ->  HashAggregate  (cost=1026.75..1062.60 rows=2390 width=44) (actual time=3.702..4.010 rows=2390.00 loops=1)
+                          Group Key: reviews.restaurant_id
+                          Batches: 1  Memory Usage: 593kB
+                          Buffers: shared hit=341
+                          ->  Seq Scan on reviews  (cost=0.00..732.86 rows=39186 width=6) (actual time=0.003..0.900 rows=39186.00 loops=1)
+                                Buffers: shared hit=341
+Planning:
+  Buffers: shared hit=137
+Planning Time: 0.240 ms
+Execution Time: 8.711 ms
+=== W04 run 3 ===
+Update on restaurants r  (cost=1116.38..1357.34 rows=0 width=0) (actual time=8.705..8.706 rows=0.00 loops=1)
+  Buffers: shared hit=18874 dirtied=45 written=45
+  ->  Hash Join  (cost=1116.38..1357.34 rows=2390 width=90) (actual time=4.301..4.782 rows=2390.00 loops=1)
+        Hash Cond: (r.restaurant_id = s.restaurant_id)
+        Buffers: shared hit=478
+        ->  Seq Scan on restaurants r  (cost=0.00..209.87 rows=7287 width=10) (actual time=0.005..0.188 rows=2500.00 loops=1)
+              Buffers: shared hit=137
+        ->  Hash  (cost=1086.50..1086.50 rows=2390 width=112) (actual time=4.289..4.289 rows=2390.00 loops=1)
+              Buckets: 4096  Batches: 1  Memory Usage: 266kB
+              Buffers: shared hit=341
+              ->  Subquery Scan on s  (cost=1026.75..1086.50 rows=2390 width=112) (actual time=3.699..4.142 rows=2390.00 loops=1)
+                    Buffers: shared hit=341
+                    ->  HashAggregate  (cost=1026.75..1062.60 rows=2390 width=44) (actual time=3.693..3.997 rows=2390.00 loops=1)
+                          Group Key: reviews.restaurant_id
+                          Batches: 1  Memory Usage: 593kB
+                          Buffers: shared hit=341
+                          ->  Seq Scan on reviews  (cost=0.00..732.86 rows=39186 width=6) (actual time=0.003..0.921 rows=39186.00 loops=1)
+                                Buffers: shared hit=341
+Planning:
+  Buffers: shared hit=137
+Planning Time: 0.232 ms
+Execution Time: 8.774 ms

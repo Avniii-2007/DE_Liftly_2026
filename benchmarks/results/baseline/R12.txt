@@ -1,0 +1,45 @@
+=== R12 run 1 ===
+Limit  (cost=4163.12..4163.14 rows=8 width=27) (actual time=7.163..7.165 rows=50.00 loops=1)
+  Buffers: shared hit=2291
+  ->  Sort  (cost=4163.12..4163.14 rows=8 width=27) (actual time=7.162..7.163 rows=50.00 loops=1)
+        Sort Key: placed_at
+        Sort Method: quicksort  Memory: 30kB
+        Buffers: shared hit=2291
+        ->  Seq Scan on orders o  (cost=0.00..4163.00 rows=8 width=27) (actual time=7.138..7.151 rows=75.00 loops=1)
+              Filter: ((partner_id IS NULL) AND ((status)::text = ANY ('{PLACED,ACCEPTED}'::text[])))
+              Rows Removed by Filter: 149925
+              Buffers: shared hit=2288
+Planning:
+  Buffers: shared hit=147
+Planning Time: 0.176 ms
+Execution Time: 7.178 ms
+=== R12 run 2 ===
+Limit  (cost=4163.12..4163.14 rows=8 width=27) (actual time=7.213..7.216 rows=50.00 loops=1)
+  Buffers: shared hit=2291
+  ->  Sort  (cost=4163.12..4163.14 rows=8 width=27) (actual time=7.212..7.213 rows=50.00 loops=1)
+        Sort Key: placed_at
+        Sort Method: quicksort  Memory: 30kB
+        Buffers: shared hit=2291
+        ->  Seq Scan on orders o  (cost=0.00..4163.00 rows=8 width=27) (actual time=7.186..7.200 rows=75.00 loops=1)
+              Filter: ((partner_id IS NULL) AND ((status)::text = ANY ('{PLACED,ACCEPTED}'::text[])))
+              Rows Removed by Filter: 149925
+              Buffers: shared hit=2288
+Planning:
+  Buffers: shared hit=147
+Planning Time: 0.174 ms
+Execution Time: 7.228 ms
+=== R12 run 3 ===
+Limit  (cost=4163.12..4163.14 rows=8 width=27) (actual time=7.179..7.181 rows=50.00 loops=1)
+  Buffers: shared hit=2291
+  ->  Sort  (cost=4163.12..4163.14 rows=8 width=27) (actual time=7.178..7.179 rows=50.00 loops=1)
+        Sort Key: placed_at
+        Sort Method: quicksort  Memory: 30kB
+        Buffers: shared hit=2291
+        ->  Seq Scan on orders o  (cost=0.00..4163.00 rows=8 width=27) (actual time=7.156..7.167 rows=75.00 loops=1)
+              Filter: ((partner_id IS NULL) AND ((status)::text = ANY ('{PLACED,ACCEPTED}'::text[])))
+              Rows Removed by Filter: 149925
+              Buffers: shared hit=2288
+Planning:
+  Buffers: shared hit=147
+Planning Time: 0.183 ms
+Execution Time: 7.193 ms
