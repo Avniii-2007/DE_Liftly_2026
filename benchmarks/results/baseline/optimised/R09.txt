@@ -1,0 +1,129 @@
+=== R09 run 1 ===
+Sort  (cost=14150.63..14150.93 rows=120 width=44) (actual time=21.994..21.998 rows=60.00 loops=1)
+  Sort Key: rc.city_id, m.month
+  Sort Method: quicksort  Memory: 27kB
+  Buffers: shared hit=460
+  CTE rest_city
+    ->  Hash Join  (cost=3.25..82.09 rows=2500 width=8) (actual time=0.032..0.569 rows=2500.00 loops=1)
+          Hash Cond: (r.locality_id = l.locality_id)
+          Buffers: shared hit=48
+          ->  Seq Scan on restaurants r  (cost=0.00..72.00 rows=2500 width=8) (actual time=0.008..0.190 rows=2500.00 loops=1)
+                Buffers: shared hit=47
+          ->  Hash  (cost=2.00..2.00 rows=100 width=8) (actual time=0.018..0.019 rows=100.00 loops=1)
+                Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                Buffers: shared hit=1
+                ->  Seq Scan on localities l  (cost=0.00..2.00 rows=100 width=8) (actual time=0.003..0.009 rows=100.00 loops=1)
+                      Buffers: shared hit=1
+  ->  HashAggregate  (cost=14061.99..14064.39 rows=120 width=44) (actual time=21.948..21.969 rows=60.00 loops=1)
+        Group Key: rc.city_id, m.month
+        Batches: 1  Memory Usage: 40kB
+        Buffers: shared hit=454
+        ->  Hash Join  (cost=81.67..12323.99 rows=173800 width=28) (actual time=1.162..15.840 rows=43141.00 loops=1)
+              Hash Cond: (o.restaurant_id = rc.restaurant_id)
+              Buffers: shared hit=454
+              ->  Nested Loop  (cost=0.42..9852.99 rows=173800 width=28) (actual time=0.037..8.605 rows=43141.00 loops=1)
+                    Buffers: shared hit=406
+                    ->  Function Scan on generate_series m  (cost=0.00..0.12 rows=12 width=8) (actual time=0.016..0.017 rows=12.00 loops=1)
+                    ->  Index Only Scan using idx_orders_placed_desc on orders o  (cost=0.42..676.24 rows=14483 width=20) (actual time=0.007..0.455 rows=3595.08 loops=12)
+                          Index Cond: ((placed_at >= m.month) AND (placed_at < (m.month + '1 mon'::interval)))
+                          Filter: ((status)::text = 'DELIVERED'::text)
+                          Rows Removed by Filter: 549
+                          Heap Fetches: 60
+                          Index Searches: 12
+                          Buffers: shared hit=406
+              ->  Hash  (cost=50.00..50.00 rows=2500 width=8) (actual time=1.116..1.116 rows=2500.00 loops=1)
+                    Buckets: 4096  Batches: 1  Memory Usage: 130kB
+                    Buffers: shared hit=48
+                    ->  CTE Scan on rest_city rc  (cost=0.00..50.00 rows=2500 width=8) (actual time=0.033..0.929 rows=2500.00 loops=1)
+                          Storage: Memory  Maximum Storage: 111kB
+                          Buffers: shared hit=48
+Planning:
+  Buffers: shared hit=463
+Planning Time: 1.619 ms
+Execution Time: 22.074 ms
+=== R09 run 2 ===
+Sort  (cost=14150.63..14150.93 rows=120 width=44) (actual time=22.156..22.160 rows=60.00 loops=1)
+  Sort Key: rc.city_id, m.month
+  Sort Method: quicksort  Memory: 27kB
+  Buffers: shared hit=460
+  CTE rest_city
+    ->  Hash Join  (cost=3.25..82.09 rows=2500 width=8) (actual time=0.034..0.540 rows=2500.00 loops=1)
+          Hash Cond: (r.locality_id = l.locality_id)
+          Buffers: shared hit=48
+          ->  Seq Scan on restaurants r  (cost=0.00..72.00 rows=2500 width=8) (actual time=0.009..0.169 rows=2500.00 loops=1)
+                Buffers: shared hit=47
+          ->  Hash  (cost=2.00..2.00 rows=100 width=8) (actual time=0.020..0.020 rows=100.00 loops=1)
+                Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                Buffers: shared hit=1
+                ->  Seq Scan on localities l  (cost=0.00..2.00 rows=100 width=8) (actual time=0.003..0.010 rows=100.00 loops=1)
+                      Buffers: shared hit=1
+  ->  HashAggregate  (cost=14061.99..14064.39 rows=120 width=44) (actual time=22.107..22.131 rows=60.00 loops=1)
+        Group Key: rc.city_id, m.month
+        Batches: 1  Memory Usage: 40kB
+        Buffers: shared hit=454
+        ->  Hash Join  (cost=81.67..12323.99 rows=173800 width=28) (actual time=1.149..15.981 rows=43141.00 loops=1)
+              Hash Cond: (o.restaurant_id = rc.restaurant_id)
+              Buffers: shared hit=454
+              ->  Nested Loop  (cost=0.42..9852.99 rows=173800 width=28) (actual time=0.035..8.570 rows=43141.00 loops=1)
+                    Buffers: shared hit=406
+                    ->  Function Scan on generate_series m  (cost=0.00..0.12 rows=12 width=8) (actual time=0.017..0.019 rows=12.00 loops=1)
+                    ->  Index Only Scan using idx_orders_placed_desc on orders o  (cost=0.42..676.24 rows=14483 width=20) (actual time=0.009..0.450 rows=3595.08 loops=12)
+                          Index Cond: ((placed_at >= m.month) AND (placed_at < (m.month + '1 mon'::interval)))
+                          Filter: ((status)::text = 'DELIVERED'::text)
+                          Rows Removed by Filter: 549
+                          Heap Fetches: 60
+                          Index Searches: 12
+                          Buffers: shared hit=406
+              ->  Hash  (cost=50.00..50.00 rows=2500 width=8) (actual time=1.103..1.103 rows=2500.00 loops=1)
+                    Buckets: 4096  Batches: 1  Memory Usage: 130kB
+                    Buffers: shared hit=48
+                    ->  CTE Scan on rest_city rc  (cost=0.00..50.00 rows=2500 width=8) (actual time=0.036..0.917 rows=2500.00 loops=1)
+                          Storage: Memory  Maximum Storage: 111kB
+                          Buffers: shared hit=48
+Planning:
+  Buffers: shared hit=463
+Planning Time: 1.597 ms
+Execution Time: 22.248 ms
+=== R09 run 3 ===
+Sort  (cost=14150.63..14150.93 rows=120 width=44) (actual time=21.627..21.631 rows=60.00 loops=1)
+  Sort Key: rc.city_id, m.month
+  Sort Method: quicksort  Memory: 27kB
+  Buffers: shared hit=460
+  CTE rest_city
+    ->  Hash Join  (cost=3.25..82.09 rows=2500 width=8) (actual time=0.032..0.546 rows=2500.00 loops=1)
+          Hash Cond: (r.locality_id = l.locality_id)
+          Buffers: shared hit=48
+          ->  Seq Scan on restaurants r  (cost=0.00..72.00 rows=2500 width=8) (actual time=0.008..0.173 rows=2500.00 loops=1)
+                Buffers: shared hit=47
+          ->  Hash  (cost=2.00..2.00 rows=100 width=8) (actual time=0.019..0.019 rows=100.00 loops=1)
+                Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                Buffers: shared hit=1
+                ->  Seq Scan on localities l  (cost=0.00..2.00 rows=100 width=8) (actual time=0.003..0.010 rows=100.00 loops=1)
+                      Buffers: shared hit=1
+  ->  HashAggregate  (cost=14061.99..14064.39 rows=120 width=44) (actual time=21.566..21.595 rows=60.00 loops=1)
+        Group Key: rc.city_id, m.month
+        Batches: 1  Memory Usage: 40kB
+        Buffers: shared hit=454
+        ->  Hash Join  (cost=81.67..12323.99 rows=173800 width=28) (actual time=1.151..15.380 rows=43141.00 loops=1)
+              Hash Cond: (o.restaurant_id = rc.restaurant_id)
+              Buffers: shared hit=454
+              ->  Nested Loop  (cost=0.42..9852.99 rows=173800 width=28) (actual time=0.031..8.200 rows=43141.00 loops=1)
+                    Buffers: shared hit=406
+                    ->  Function Scan on generate_series m  (cost=0.00..0.12 rows=12 width=8) (actual time=0.014..0.015 rows=12.00 loops=1)
+                    ->  Index Only Scan using idx_orders_placed_desc on orders o  (cost=0.42..676.24 rows=14483 width=20) (actual time=0.007..0.422 rows=3595.08 loops=12)
+                          Index Cond: ((placed_at >= m.month) AND (placed_at < (m.month + '1 mon'::interval)))
+                          Filter: ((status)::text = 'DELIVERED'::text)
+                          Rows Removed by Filter: 549
+                          Heap Fetches: 60
+                          Index Searches: 12
+                          Buffers: shared hit=406
+              ->  Hash  (cost=50.00..50.00 rows=2500 width=8) (actual time=1.110..1.110 rows=2500.00 loops=1)
+                    Buckets: 4096  Batches: 1  Memory Usage: 130kB
+                    Buffers: shared hit=48
+                    ->  CTE Scan on rest_city rc  (cost=0.00..50.00 rows=2500 width=8) (actual time=0.033..0.923 rows=2500.00 loops=1)
+                          Storage: Memory  Maximum Storage: 111kB
+                          Buffers: shared hit=48
+Planning:
+  Buffers: shared hit=463
+Planning Time: 1.735 ms
+Execution Time: 21.709 ms

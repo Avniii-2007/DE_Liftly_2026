@@ -1,0 +1,39 @@
+=== R11 run 1 ===
+Aggregate  (cost=8.45..8.46 rows=1 width=40) (actual time=0.022..0.022 rows=1.00 loops=1)
+  Buffers: shared hit=4
+  ->  Index Only Scan using idx_orders_partner_placed on orders  (cost=0.42..8.44 rows=1 width=4) (actual time=0.010..0.011 rows=2.00 loops=1)
+        Index Cond: ((partner_id = 150) AND (placed_at >= '2026-06-22 00:00:00+05:30'::timestamp with time zone) AND (placed_at < '2026-06-29 00:00:00+05:30'::timestamp with time zone))
+        Filter: ((status)::text = 'DELIVERED'::text)
+        Heap Fetches: 0
+        Index Searches: 1
+        Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=307
+Planning Time: 0.949 ms
+Execution Time: 0.055 ms
+=== R11 run 2 ===
+Aggregate  (cost=8.45..8.46 rows=1 width=40) (actual time=0.022..0.022 rows=1.00 loops=1)
+  Buffers: shared hit=4
+  ->  Index Only Scan using idx_orders_partner_placed on orders  (cost=0.42..8.44 rows=1 width=4) (actual time=0.010..0.011 rows=2.00 loops=1)
+        Index Cond: ((partner_id = 150) AND (placed_at >= '2026-06-22 00:00:00+05:30'::timestamp with time zone) AND (placed_at < '2026-06-29 00:00:00+05:30'::timestamp with time zone))
+        Filter: ((status)::text = 'DELIVERED'::text)
+        Heap Fetches: 0
+        Index Searches: 1
+        Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=307
+Planning Time: 0.901 ms
+Execution Time: 0.053 ms
+=== R11 run 3 ===
+Aggregate  (cost=8.45..8.46 rows=1 width=40) (actual time=0.021..0.021 rows=1.00 loops=1)
+  Buffers: shared hit=4
+  ->  Index Only Scan using idx_orders_partner_placed on orders  (cost=0.42..8.44 rows=1 width=4) (actual time=0.010..0.011 rows=2.00 loops=1)
+        Index Cond: ((partner_id = 150) AND (placed_at >= '2026-06-22 00:00:00+05:30'::timestamp with time zone) AND (placed_at < '2026-06-29 00:00:00+05:30'::timestamp with time zone))
+        Filter: ((status)::text = 'DELIVERED'::text)
+        Heap Fetches: 0
+        Index Searches: 1
+        Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=307
+Planning Time: 0.911 ms
+Execution Time: 0.051 ms

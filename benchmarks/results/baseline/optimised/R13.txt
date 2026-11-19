@@ -1,0 +1,51 @@
+=== R13 run 1 ===
+Nested Loop Anti Join  (cost=0.70..1115.48 rows=63 width=27) (actual time=0.024..0.704 rows=129.00 loops=1)
+  Buffers: shared hit=870 dirtied=1
+  ->  Index Only Scan using idx_delivery_partners_city_active on delivery_partners p  (cost=0.28..17.21 rows=282 width=27) (actual time=0.013..0.032 rows=285.00 loops=1)
+        Index Cond: (city_id = 1)
+        Heap Fetches: 0
+        Index Searches: 1
+        Buffers: shared hit=4
+  ->  Index Only Scan using idx_orders_partner_placed on orders o  (cost=0.42..3.89 rows=1 width=4) (actual time=0.002..0.002 rows=0.55 loops=285)
+        Index Cond: ((partner_id = p.partner_id) AND (placed_at >= '2026-06-25 00:00:00+05:30'::timestamp with time zone))
+        Heap Fetches: 12
+        Index Searches: 285
+        Buffers: shared hit=866
+Planning:
+  Buffers: shared hit=470
+Planning Time: 1.426 ms
+Execution Time: 0.734 ms
+=== R13 run 2 ===
+Nested Loop Anti Join  (cost=0.70..1115.48 rows=63 width=27) (actual time=0.023..0.672 rows=129.00 loops=1)
+  Buffers: shared hit=869
+  ->  Index Only Scan using idx_delivery_partners_city_active on delivery_partners p  (cost=0.28..17.21 rows=282 width=27) (actual time=0.012..0.030 rows=285.00 loops=1)
+        Index Cond: (city_id = 1)
+        Heap Fetches: 0
+        Index Searches: 1
+        Buffers: shared hit=4
+  ->  Index Only Scan using idx_orders_partner_placed on orders o  (cost=0.42..3.89 rows=1 width=4) (actual time=0.002..0.002 rows=0.55 loops=285)
+        Index Cond: ((partner_id = p.partner_id) AND (placed_at >= '2026-06-25 00:00:00+05:30'::timestamp with time zone))
+        Heap Fetches: 9
+        Index Searches: 285
+        Buffers: shared hit=865
+Planning:
+  Buffers: shared hit=470
+Planning Time: 1.295 ms
+Execution Time: 0.700 ms
+=== R13 run 3 ===
+Nested Loop Anti Join  (cost=0.70..1115.48 rows=63 width=27) (actual time=0.022..0.632 rows=129.00 loops=1)
+  Buffers: shared hit=869
+  ->  Index Only Scan using idx_delivery_partners_city_active on delivery_partners p  (cost=0.28..17.21 rows=282 width=27) (actual time=0.011..0.030 rows=285.00 loops=1)
+        Index Cond: (city_id = 1)
+        Heap Fetches: 0
+        Index Searches: 1
+        Buffers: shared hit=4
+  ->  Index Only Scan using idx_orders_partner_placed on orders o  (cost=0.42..3.89 rows=1 width=4) (actual time=0.002..0.002 rows=0.55 loops=285)
+        Index Cond: ((partner_id = p.partner_id) AND (placed_at >= '2026-06-25 00:00:00+05:30'::timestamp with time zone))
+        Heap Fetches: 9
+        Index Searches: 285
+        Buffers: shared hit=865
+Planning:
+  Buffers: shared hit=470
+Planning Time: 1.230 ms
+Execution Time: 0.660 ms

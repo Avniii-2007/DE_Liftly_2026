@@ -1,0 +1,31 @@
+query_id,type,avg_ms,median_ms,min_ms,max_ms,scan_nodes
+R01,READ,0.131,0.131,0.129,0.133,Seq Scan on localities | Bitmap Heap Scan on restaurants | Bitmap Index Scan on idx_restaurants_locality_open_rating
+R02,READ,7.225,7.253,6.897,7.526,Seq Scan on localities | Index Only Scan using idx_restaurants_locality on restaurants | Index Scan using idx_menu_items_rest_cat on menu_items
+R03,READ,0.107,0.091,0.088,0.141,Index Only Scan using idx_menu_items_rest_cat on menu_items
+R04,READ,0.143,0.142,0.142,0.146,Bitmap Heap Scan on orders | Bitmap Index Scan on idx_orders_customer_placed | Index Scan using restaurants_pkey on restaurants
+R05,READ,0.081,0.080,0.080,0.082,Index Only Scan using idx_orders_preparing_accepted on orders
+R06,READ,0.072,0.071,0.069,0.076,Index Only Scan using idx_orders_restaurant_placed on orders
+R07,READ,0.134,0.136,0.126,0.140,Index Only Scan using idx_orders_restaurant_placed on orders | Index Scan using order_items_pkey on order_items | Index Scan using menu_items_pkey on menu_items
+R08,READ,3.727,3.733,3.698,3.751,Index Only Scan using idx_orders_placed_desc on orders | Seq Scan on localities | Index Only Scan using idx_restaurants_locality on restaurants | Index Scan using order_items_pkey on order_items
+R09,READ,22.010,22.074,21.709,22.248,Seq Scan on restaurants | Seq Scan on localities | Index Only Scan using idx_orders_placed_desc on orders
+R10,READ,1.423,1.462,1.322,1.486,Index Only Scan using idx_orders_placed_desc on orders
+R11,READ,0.053,0.053,0.051,0.055,Index Only Scan using idx_orders_partner_placed on orders
+R12,READ,0.081,0.081,0.079,0.082,Index Only Scan using idx_orders_unassigned_dispatch on orders
+R13,READ,0.698,0.700,0.660,0.734,Index Only Scan using idx_delivery_partners_city_active on delivery_partners | Index Only Scan using idx_orders_partner_placed on orders
+R14,READ,1.714,1.732,1.605,1.805,Index Only Scan using idx_orders_placed_desc on orders | Index Only Scan using idx_customers_gold_expires on customers
+R15,READ,4.940,4.926,4.825,5.070,Seq Scan on coupons | Index Only Scan using idx_orders_coupon_delivered on orders
+R16,READ,0.147,0.152,0.127,0.161,Index Only Scan using idx_payments_failed_attempted on payments
+R17,READ,23.642,23.557,23.155,24.214,Seq Scan on orders | Index Only Scan using idx_payments_failed_attempted on payments
+R18,READ,0.497,0.495,0.492,0.503,Index Scan using idx_reviews_created_nonnull on reviews
+R19,READ,10.676,10.489,10.328,11.210,Seq Scan on localities | Index Only Scan using idx_restaurants_locality on restaurants | Index Only Scan using idx_reviews_restaurant_rating on reviews | Index Only Scan using idx_orders_restaurant_placed on orders
+R20,READ,13.219,13.022,13.007,13.627,Index Only Scan using idx_customers_city on customers | Index Only Scan using idx_orders_customer_placed on orders
+R21,READ,8.729,8.767,8.630,8.791,Seq Scan on customers | Index Only Scan using idx_orders_placed_desc on orders
+R22,READ,4.102,4.108,4.053,4.145,Seq Scan on localities | Index Only Scan using idx_restaurants_locality on restaurants | Index Only Scan using idx_orders_restaurant_placed on orders
+R23,READ,0.058,0.058,0.055,0.061,Index Scan using idx_orders_placed_desc on orders
+R24,READ,0.164,0.165,0.161,0.167,Index Scan using orders_pkey on orders | Index Scan using restaurants_pkey on restaurants | Index Only Scan using idx_payments_order_status on payments | Index Scan using order_items_pkey on order_items | Index Scan using menu_items_pkey on menu_items
+R25,READ,0.311,0.311,0.308,0.315,Bitmap Heap Scan on restaurants | Bitmap Index Scan on idx_restaurants_cuisines_gin | Seq Scan on localities
+W01,WRITE,1.534,1.473,1.445,1.685,(no scan)
+W02,WRITE,0.847,0.785,0.767,0.990,Index Only Scan using idx_orders_unassigned_dispatch on orders | Index Scan using orders_pkey on orders
+W03,WRITE,0.405,0.345,0.345,0.526,Index Scan using idx_menu_items_rest_cat on menu_items
+W04,WRITE,27.047,27.323,26.084,27.734,Seq Scan on restaurants | Seq Scan on reviews
+W05,WRITE,16.884,17.346,14.265,19.042,Bitmap Heap Scan on customers | Bitmap Index Scan on idx_customers_gold_expires

@@ -1,0 +1,81 @@
+=== R25 run 1 ===
+Sort  (cost=73.03..73.18 rows=60 width=71) (actual time=0.273..0.276 rows=62.00 loops=1)
+  Sort Key: r.rating DESC NULLS LAST
+  Sort Method: quicksort  Memory: 30kB
+  Buffers: shared hit=54
+  ->  Hash Join  (cost=13.70..71.26 rows=60 width=71) (actual time=0.080..0.227 rows=62.00 loops=1)
+        Hash Cond: (r.locality_id = l.locality_id)
+        Buffers: shared hit=51
+        ->  Bitmap Heap Scan on restaurants r  (cost=11.33..67.25 rows=595 width=75) (actual time=0.056..0.158 rows=595.00 loops=1)
+              Recheck Cond: ((cuisines @> '{Chinese}'::text[]) AND ((status)::text = 'OPEN'::text))
+              Heap Blocks: exact=47
+              Buffers: shared hit=50
+              ->  Bitmap Index Scan on idx_restaurants_cuisines_gin  (cost=0.00..11.18 rows=595 width=0) (actual time=0.044..0.045 rows=595.00 loops=1)
+                    Index Cond: (cuisines @> '{Chinese}'::text[])
+                    Index Searches: 1
+                    Buffers: shared hit=3
+        ->  Hash  (cost=2.25..2.25 rows=10 width=4) (actual time=0.015..0.015 rows=10.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 9kB
+              Buffers: shared hit=1
+              ->  Seq Scan on localities l  (cost=0.00..2.25 rows=10 width=4) (actual time=0.006..0.009 rows=10.00 loops=1)
+                    Filter: (city_id = 6)
+                    Rows Removed by Filter: 90
+                    Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=361
+Planning Time: 0.990 ms
+Execution Time: 0.315 ms
+=== R25 run 2 ===
+Sort  (cost=73.03..73.18 rows=60 width=71) (actual time=0.265..0.269 rows=62.00 loops=1)
+  Sort Key: r.rating DESC NULLS LAST
+  Sort Method: quicksort  Memory: 30kB
+  Buffers: shared hit=54
+  ->  Hash Join  (cost=13.70..71.26 rows=60 width=71) (actual time=0.077..0.231 rows=62.00 loops=1)
+        Hash Cond: (r.locality_id = l.locality_id)
+        Buffers: shared hit=51
+        ->  Bitmap Heap Scan on restaurants r  (cost=11.33..67.25 rows=595 width=75) (actual time=0.055..0.163 rows=595.00 loops=1)
+              Recheck Cond: ((cuisines @> '{Chinese}'::text[]) AND ((status)::text = 'OPEN'::text))
+              Heap Blocks: exact=47
+              Buffers: shared hit=50
+              ->  Bitmap Index Scan on idx_restaurants_cuisines_gin  (cost=0.00..11.18 rows=595 width=0) (actual time=0.044..0.044 rows=595.00 loops=1)
+                    Index Cond: (cuisines @> '{Chinese}'::text[])
+                    Index Searches: 1
+                    Buffers: shared hit=3
+        ->  Hash  (cost=2.25..2.25 rows=10 width=4) (actual time=0.014..0.014 rows=10.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 9kB
+              Buffers: shared hit=1
+              ->  Seq Scan on localities l  (cost=0.00..2.25 rows=10 width=4) (actual time=0.006..0.009 rows=10.00 loops=1)
+                    Filter: (city_id = 6)
+                    Rows Removed by Filter: 90
+                    Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=361
+Planning Time: 0.951 ms
+Execution Time: 0.308 ms
+=== R25 run 3 ===
+Sort  (cost=73.03..73.18 rows=60 width=71) (actual time=0.269..0.272 rows=62.00 loops=1)
+  Sort Key: r.rating DESC NULLS LAST
+  Sort Method: quicksort  Memory: 30kB
+  Buffers: shared hit=54
+  ->  Hash Join  (cost=13.70..71.26 rows=60 width=71) (actual time=0.079..0.235 rows=62.00 loops=1)
+        Hash Cond: (r.locality_id = l.locality_id)
+        Buffers: shared hit=51
+        ->  Bitmap Heap Scan on restaurants r  (cost=11.33..67.25 rows=595 width=75) (actual time=0.056..0.165 rows=595.00 loops=1)
+              Recheck Cond: ((cuisines @> '{Chinese}'::text[]) AND ((status)::text = 'OPEN'::text))
+              Heap Blocks: exact=47
+              Buffers: shared hit=50
+              ->  Bitmap Index Scan on idx_restaurants_cuisines_gin  (cost=0.00..11.18 rows=595 width=0) (actual time=0.043..0.044 rows=595.00 loops=1)
+                    Index Cond: (cuisines @> '{Chinese}'::text[])
+                    Index Searches: 1
+                    Buffers: shared hit=3
+        ->  Hash  (cost=2.25..2.25 rows=10 width=4) (actual time=0.015..0.015 rows=10.00 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 9kB
+              Buffers: shared hit=1
+              ->  Seq Scan on localities l  (cost=0.00..2.25 rows=10 width=4) (actual time=0.006..0.009 rows=10.00 loops=1)
+                    Filter: (city_id = 6)
+                    Rows Removed by Filter: 90
+                    Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=361
+Planning Time: 0.958 ms
+Execution Time: 0.311 ms

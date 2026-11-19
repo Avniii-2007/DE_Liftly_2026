@@ -1,0 +1,75 @@
+=== R15 run 1 ===
+Sort  (cost=1614.67..1614.74 rows=30 width=83) (actual time=4.874..4.876 rows=30.00 loops=1)
+  Sort Key: (count(o.order_id)) DESC
+  Sort Method: quicksort  Memory: 26kB
+  Buffers: shared hit=124
+  ->  GroupAggregate  (cost=2.32..1613.93 rows=30 width=83) (actual time=0.208..4.855 rows=30.00 loops=1)
+        Group Key: c.coupon_code
+        Buffers: shared hit=121
+        ->  Merge Left Join  (cost=2.32..309.91 rows=130350 width=23) (actual time=0.088..3.000 rows=17623.00 loops=1)
+              Merge Cond: ((c.coupon_code)::text = (o.coupon_code)::text)
+              Buffers: shared hit=121
+              ->  Sort  (cost=2.04..2.11 rows=30 width=11) (actual time=0.030..0.032 rows=30.00 loops=1)
+                    Sort Key: c.coupon_code
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on coupons c  (cost=0.00..1.30 rows=30 width=11) (actual time=0.004..0.006 rows=30.00 loops=1)
+                          Buffers: shared hit=1
+              ->  Index Only Scan using idx_orders_coupon_delivered on orders o  (cost=0.29..687.71 rows=130350 width=21) (actual time=0.050..1.389 rows=17623.00 loops=1)
+                    Heap Fetches: 20
+                    Index Searches: 1
+                    Buffers: shared hit=120
+Planning:
+  Buffers: shared hit=424
+Planning Time: 1.251 ms
+Execution Time: 4.926 ms
+=== R15 run 2 ===
+Sort  (cost=1614.67..1614.74 rows=30 width=83) (actual time=4.769..4.772 rows=30.00 loops=1)
+  Sort Key: (count(o.order_id)) DESC
+  Sort Method: quicksort  Memory: 26kB
+  Buffers: shared hit=124
+  ->  GroupAggregate  (cost=2.32..1613.93 rows=30 width=83) (actual time=0.208..4.752 rows=30.00 loops=1)
+        Group Key: c.coupon_code
+        Buffers: shared hit=121
+        ->  Merge Left Join  (cost=2.32..309.91 rows=130350 width=23) (actual time=0.086..2.920 rows=17623.00 loops=1)
+              Merge Cond: ((c.coupon_code)::text = (o.coupon_code)::text)
+              Buffers: shared hit=121
+              ->  Sort  (cost=2.04..2.11 rows=30 width=11) (actual time=0.028..0.030 rows=30.00 loops=1)
+                    Sort Key: c.coupon_code
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on coupons c  (cost=0.00..1.30 rows=30 width=11) (actual time=0.003..0.006 rows=30.00 loops=1)
+                          Buffers: shared hit=1
+              ->  Index Only Scan using idx_orders_coupon_delivered on orders o  (cost=0.29..687.71 rows=130350 width=21) (actual time=0.050..1.289 rows=17623.00 loops=1)
+                    Heap Fetches: 20
+                    Index Searches: 1
+                    Buffers: shared hit=120
+Planning:
+  Buffers: shared hit=424
+Planning Time: 1.116 ms
+Execution Time: 4.825 ms
+=== R15 run 3 ===
+Sort  (cost=1614.67..1614.74 rows=30 width=83) (actual time=5.015..5.017 rows=30.00 loops=1)
+  Sort Key: (count(o.order_id)) DESC
+  Sort Method: quicksort  Memory: 26kB
+  Buffers: shared hit=124
+  ->  GroupAggregate  (cost=2.32..1613.93 rows=30 width=83) (actual time=0.210..4.995 rows=30.00 loops=1)
+        Group Key: c.coupon_code
+        Buffers: shared hit=121
+        ->  Merge Left Join  (cost=2.32..309.91 rows=130350 width=23) (actual time=0.086..3.128 rows=17623.00 loops=1)
+              Merge Cond: ((c.coupon_code)::text = (o.coupon_code)::text)
+              Buffers: shared hit=121
+              ->  Sort  (cost=2.04..2.11 rows=30 width=11) (actual time=0.029..0.032 rows=30.00 loops=1)
+                    Sort Key: c.coupon_code
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on coupons c  (cost=0.00..1.30 rows=30 width=11) (actual time=0.003..0.006 rows=30.00 loops=1)
+                          Buffers: shared hit=1
+              ->  Index Only Scan using idx_orders_coupon_delivered on orders o  (cost=0.29..687.71 rows=130350 width=21) (actual time=0.051..1.462 rows=17623.00 loops=1)
+                    Heap Fetches: 20
+                    Index Searches: 1
+                    Buffers: shared hit=120
+Planning:
+  Buffers: shared hit=424
+Planning Time: 1.207 ms
+Execution Time: 5.070 ms
