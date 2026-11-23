@@ -1,0 +1,105 @@
+=== R09 run 1 ===
+GroupAggregate  (cost=167507.31..197873.80 rows=867614 width=44) (actual time=696.088..945.498 rows=60.00 loops=1)
+  Group Key: l.city_id, (date_trunc('month'::text, o.placed_at))
+  Buffers: shared hit=90202 read=8310, temp read=8878 written=8893
+  ->  Sort  (cost=167507.31..169676.35 rows=867614 width=28) (actual time=688.650..745.942 rows=862820.00 loops=1)
+        Sort Key: l.city_id, (date_trunc('month'::text, o.placed_at))
+        Sort Method: external merge  Disk: 35560kB
+        Buffers: shared hit=90202 read=8310, temp read=8878 written=8893
+        ->  Hash Join  (cost=2068.68..61173.04 rows=867614 width=28) (actual time=10.526..483.890 rows=862820.00 loops=1)
+              Hash Cond: (r.locality_id = l.locality_id)
+              Buffers: shared hit=90196 read=8310
+              ->  Hash Join  (cost=2065.43..56626.74 rows=867614 width=20) (actual time=9.686..307.065 rows=862820.00 loops=1)
+                    Hash Cond: (o.restaurant_id = r.restaurant_id)
+                    Buffers: shared hit=90195 read=8310
+                    ->  Index Only Scan using idx_orders_placed_desc on orders o  (cost=0.43..52284.07 rows=867614 width=20) (actual time=0.338..126.176 rows=862820.00 loops=1)
+                          Index Cond: ((placed_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone) AND (placed_at < '2027-01-01 00:00:00+05:30'::timestamp with time zone))
+                          Filter: ((status)::text = 'DELIVERED'::text)
+                          Rows Removed by Filter: 131680
+                          Heap Fetches: 0
+                          Index Searches: 1
+                          Buffers: shared hit=90187 read=7378
+                    ->  Hash  (cost=1440.00..1440.00 rows=50000 width=8) (actual time=9.295..9.295 rows=50000.00 loops=1)
+                          Buckets: 65536  Batches: 1  Memory Usage: 2466kB
+                          Buffers: shared hit=8 read=932
+                          ->  Seq Scan on restaurants r  (cost=0.00..1440.00 rows=50000 width=8) (actual time=0.020..5.280 rows=50000.00 loops=1)
+                                Buffers: shared hit=8 read=932
+              ->  Hash  (cost=2.00..2.00 rows=100 width=8) (actual time=0.023..0.023 rows=100.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on localities l  (cost=0.00..2.00 rows=100 width=8) (actual time=0.005..0.012 rows=100.00 loops=1)
+                          Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=481 read=5
+Planning Time: 1.597 ms
+Execution Time: 951.538 ms
+=== R09 run 2 ===
+GroupAggregate  (cost=167507.31..197873.80 rows=867614 width=44) (actual time=680.274..931.041 rows=60.00 loops=1)
+  Group Key: l.city_id, (date_trunc('month'::text, o.placed_at))
+  Buffers: shared hit=95356 read=3156, temp read=8878 written=8893
+  ->  Sort  (cost=167507.31..169676.35 rows=867614 width=28) (actual time=672.857..730.904 rows=862820.00 loops=1)
+        Sort Key: l.city_id, (date_trunc('month'::text, o.placed_at))
+        Sort Method: external merge  Disk: 35560kB
+        Buffers: shared hit=95356 read=3156, temp read=8878 written=8893
+        ->  Hash Join  (cost=2068.68..61173.04 rows=867614 width=28) (actual time=9.791..469.173 rows=862820.00 loops=1)
+              Hash Cond: (r.locality_id = l.locality_id)
+              Buffers: shared hit=95350 read=3156
+              ->  Hash Join  (cost=2065.43..56626.74 rows=867614 width=20) (actual time=9.755..291.699 rows=862820.00 loops=1)
+                    Hash Cond: (o.restaurant_id = r.restaurant_id)
+                    Buffers: shared hit=95349 read=3156
+                    ->  Index Only Scan using idx_orders_placed_desc on orders o  (cost=0.43..52284.07 rows=867614 width=20) (actual time=0.321..112.445 rows=862820.00 loops=1)
+                          Index Cond: ((placed_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone) AND (placed_at < '2027-01-01 00:00:00+05:30'::timestamp with time zone))
+                          Filter: ((status)::text = 'DELIVERED'::text)
+                          Rows Removed by Filter: 131680
+                          Heap Fetches: 0
+                          Index Searches: 1
+                          Buffers: shared hit=95344 read=2221
+                    ->  Hash  (cost=1440.00..1440.00 rows=50000 width=8) (actual time=9.376..9.376 rows=50000.00 loops=1)
+                          Buckets: 65536  Batches: 1  Memory Usage: 2466kB
+                          Buffers: shared hit=5 read=935
+                          ->  Seq Scan on restaurants r  (cost=0.00..1440.00 rows=50000 width=8) (actual time=0.017..5.313 rows=50000.00 loops=1)
+                                Buffers: shared hit=5 read=935
+              ->  Hash  (cost=2.00..2.00 rows=100 width=8) (actual time=0.022..0.022 rows=100.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on localities l  (cost=0.00..2.00 rows=100 width=8) (actual time=0.005..0.011 rows=100.00 loops=1)
+                          Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=485 read=1
+Planning Time: 1.529 ms
+Execution Time: 938.123 ms
+=== R09 run 3 ===
+GroupAggregate  (cost=167507.31..197873.80 rows=867614 width=44) (actual time=653.632..903.209 rows=60.00 loops=1)
+  Group Key: l.city_id, (date_trunc('month'::text, o.placed_at))
+  Buffers: shared hit=98512, temp read=8878 written=8893
+  ->  Sort  (cost=167507.31..169676.35 rows=867614 width=28) (actual time=646.337..703.697 rows=862820.00 loops=1)
+        Sort Key: l.city_id, (date_trunc('month'::text, o.placed_at))
+        Sort Method: external merge  Disk: 35560kB
+        Buffers: shared hit=98512, temp read=8878 written=8893
+        ->  Hash Join  (cost=2068.68..61173.04 rows=867614 width=28) (actual time=9.422..443.597 rows=862820.00 loops=1)
+              Hash Cond: (r.locality_id = l.locality_id)
+              Buffers: shared hit=98506
+              ->  Hash Join  (cost=2065.43..56626.74 rows=867614 width=20) (actual time=9.387..269.898 rows=862820.00 loops=1)
+                    Hash Cond: (o.restaurant_id = r.restaurant_id)
+                    Buffers: shared hit=98505
+                    ->  Index Only Scan using idx_orders_placed_desc on orders o  (cost=0.43..52284.07 rows=867614 width=20) (actual time=0.261..103.450 rows=862820.00 loops=1)
+                          Index Cond: ((placed_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone) AND (placed_at < '2027-01-01 00:00:00+05:30'::timestamp with time zone))
+                          Filter: ((status)::text = 'DELIVERED'::text)
+                          Rows Removed by Filter: 131680
+                          Heap Fetches: 0
+                          Index Searches: 1
+                          Buffers: shared hit=97565
+                    ->  Hash  (cost=1440.00..1440.00 rows=50000 width=8) (actual time=9.074..9.075 rows=50000.00 loops=1)
+                          Buckets: 65536  Batches: 1  Memory Usage: 2466kB
+                          Buffers: shared hit=940
+                          ->  Seq Scan on restaurants r  (cost=0.00..1440.00 rows=50000 width=8) (actual time=0.005..5.261 rows=50000.00 loops=1)
+                                Buffers: shared hit=940
+              ->  Hash  (cost=2.00..2.00 rows=100 width=8) (actual time=0.022..0.022 rows=100.00 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 12kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on localities l  (cost=0.00..2.00 rows=100 width=8) (actual time=0.005..0.011 rows=100.00 loops=1)
+                          Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=486
+Planning Time: 1.791 ms
+Execution Time: 909.021 ms

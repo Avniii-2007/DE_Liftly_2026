@@ -1,0 +1,105 @@
+=== R20 run 1 ===
+Limit  (cost=100726.12..100726.17 rows=20 width=56) (actual time=396.999..398.957 rows=20.00 loops=1)
+  Buffers: shared hit=350282 read=26625 written=45
+  ->  Sort  (cost=100726.12..100928.71 rows=81033 width=56) (actual time=396.998..398.954 rows=20.00 loops=1)
+        Sort Key: (sum(o.total_amount)) DESC
+        Sort Method: top-N heapsort  Memory: 27kB
+        Buffers: shared hit=350282 read=26625 written=45
+        ->  Finalize GroupAggregate  (cost=1000.88..98569.87 rows=81033 width=56) (actual time=6.767..384.386 rows=79380.00 loops=1)
+              Group Key: c.customer_id
+              Buffers: shared hit=350279 read=26625 written=45
+              ->  Gather Merge  (cost=1000.88..95612.16 rows=194479 width=56) (actual time=6.751..342.049 rows=79380.00 loops=1)
+                    Workers Planned: 2
+                    Workers Launched: 2
+                    Buffers: shared hit=350279 read=26625 written=45
+                    ->  Partial GroupAggregate  (cost=0.85..72164.44 rows=81033 width=56) (actual time=0.410..299.359 rows=26460.00 loops=3)
+                          Group Key: c.customer_id
+                          Buffers: shared hit=350279 read=26625 written=45
+                          ->  Nested Loop  (cost=0.85..69832.18 rows=175913 width=21) (actual time=0.394..273.781 rows=138740.00 loops=3)
+                                Buffers: shared hit=350279 read=26625 written=45
+                                ->  Parallel Index Scan using customers_pkey on customers c  (cost=0.42..16825.62 rows=33764 width=16) (actual time=0.110..33.333 rows=26666.67 loops=3)
+                                      Filter: (city_id = 2)
+                                      Rows Removed by Filter: 140000
+                                      Index Searches: 1
+                                      Buffers: shared hit=1493 read=7588 written=16
+                                ->  Index Only Scan using idx_orders_customer_placed on orders o  (cost=0.43..1.51 rows=6 width=9) (actual time=0.007..0.008 rows=5.20 loops=80000)
+                                      Index Cond: (customer_id = c.customer_id)
+                                      Filter: ((status)::text = 'DELIVERED'::text)
+                                      Rows Removed by Filter: 1
+                                      Heap Fetches: 0
+                                      Index Searches: 80000
+                                      Buffers: shared hit=348786 read=19037 written=29
+Planning:
+  Buffers: shared hit=440 read=16
+Planning Time: 1.619 ms
+Execution Time: 399.032 ms
+=== R20 run 2 ===
+Limit  (cost=100726.12..100726.17 rows=20 width=56) (actual time=200.487..202.537 rows=20.00 loops=1)
+  Buffers: shared hit=350278 read=26625
+  ->  Sort  (cost=100726.12..100928.71 rows=81033 width=56) (actual time=200.486..202.534 rows=20.00 loops=1)
+        Sort Key: (sum(o.total_amount)) DESC
+        Sort Method: top-N heapsort  Memory: 27kB
+        Buffers: shared hit=350278 read=26625
+        ->  Finalize GroupAggregate  (cost=1000.88..98569.87 rows=81033 width=56) (actual time=5.835..189.421 rows=79380.00 loops=1)
+              Group Key: c.customer_id
+              Buffers: shared hit=350275 read=26625
+              ->  Gather Merge  (cost=1000.88..95612.16 rows=194479 width=56) (actual time=5.819..152.034 rows=79380.00 loops=1)
+                    Workers Planned: 2
+                    Workers Launched: 2
+                    Buffers: shared hit=350275 read=26625
+                    ->  Partial GroupAggregate  (cost=0.85..72164.44 rows=81033 width=56) (actual time=0.176..146.412 rows=26460.00 loops=3)
+                          Group Key: c.customer_id
+                          Buffers: shared hit=350275 read=26625
+                          ->  Nested Loop  (cost=0.85..69832.18 rows=175913 width=21) (actual time=0.158..123.280 rows=138740.00 loops=3)
+                                Buffers: shared hit=350275 read=26625
+                                ->  Parallel Index Scan using customers_pkey on customers c  (cost=0.42..16825.62 rows=33764 width=16) (actual time=0.079..30.226 rows=26666.67 loops=3)
+                                      Filter: (city_id = 2)
+                                      Rows Removed by Filter: 140000
+                                      Index Searches: 1
+                                      Buffers: shared hit=1489 read=7588
+                                ->  Index Only Scan using idx_orders_customer_placed on orders o  (cost=0.43..1.51 rows=6 width=9) (actual time=0.002..0.003 rows=5.20 loops=80000)
+                                      Index Cond: (customer_id = c.customer_id)
+                                      Filter: ((status)::text = 'DELIVERED'::text)
+                                      Rows Removed by Filter: 1
+                                      Heap Fetches: 0
+                                      Index Searches: 80000
+                                      Buffers: shared hit=348786 read=19037
+Planning:
+  Buffers: shared hit=395 read=61
+Planning Time: 2.070 ms
+Execution Time: 202.606 ms
+=== R20 run 3 ===
+Limit  (cost=100726.12..100726.17 rows=20 width=56) (actual time=199.776..201.979 rows=20.00 loops=1)
+  Buffers: shared hit=350280 read=26625
+  ->  Sort  (cost=100726.12..100928.71 rows=81033 width=56) (actual time=199.775..201.977 rows=20.00 loops=1)
+        Sort Key: (sum(o.total_amount)) DESC
+        Sort Method: top-N heapsort  Memory: 27kB
+        Buffers: shared hit=350280 read=26625
+        ->  Finalize GroupAggregate  (cost=1000.88..98569.87 rows=81033 width=56) (actual time=5.465..188.705 rows=79380.00 loops=1)
+              Group Key: c.customer_id
+              Buffers: shared hit=350277 read=26625
+              ->  Gather Merge  (cost=1000.88..95612.16 rows=194479 width=56) (actual time=5.451..150.775 rows=79380.00 loops=1)
+                    Workers Planned: 2
+                    Workers Launched: 2
+                    Buffers: shared hit=350277 read=26625
+                    ->  Partial GroupAggregate  (cost=0.85..72164.44 rows=81033 width=56) (actual time=0.162..146.116 rows=26460.00 loops=3)
+                          Group Key: c.customer_id
+                          Buffers: shared hit=350277 read=26625
+                          ->  Nested Loop  (cost=0.85..69832.18 rows=175913 width=21) (actual time=0.147..123.398 rows=138740.00 loops=3)
+                                Buffers: shared hit=350277 read=26625
+                                ->  Parallel Index Scan using customers_pkey on customers c  (cost=0.42..16825.62 rows=33764 width=16) (actual time=0.083..30.701 rows=26666.67 loops=3)
+                                      Filter: (city_id = 2)
+                                      Rows Removed by Filter: 140000
+                                      Index Searches: 1
+                                      Buffers: shared hit=1491 read=7588
+                                ->  Index Only Scan using idx_orders_customer_placed on orders o  (cost=0.43..1.51 rows=6 width=9) (actual time=0.002..0.003 rows=5.20 loops=80000)
+                                      Index Cond: (customer_id = c.customer_id)
+                                      Filter: ((status)::text = 'DELIVERED'::text)
+                                      Rows Removed by Filter: 1
+                                      Heap Fetches: 0
+                                      Index Searches: 80000
+                                      Buffers: shared hit=348786 read=19037
+Planning:
+  Buffers: shared hit=395 read=61
+Planning Time: 1.877 ms
+Execution Time: 202.049 ms
