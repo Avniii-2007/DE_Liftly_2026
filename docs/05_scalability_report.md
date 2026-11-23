@@ -42,7 +42,7 @@ psql -d zomato_large20 -f sql/05_indexes.sql                           # Phase 4
 
 ## 1. Results table (all 30 queries)
 
-`Growth = large ÷ seed`. Seed times are the Phase 4 averages from `benchmarks/results/optimised/summary.csv`; large times are from `benchmarks/results/large/summary.csv` (raw plans for all 3 runs alongside).
+`Growth = large ÷ seed`. Seed times are the Phase 4 averages from `benchmarks/results/optimized/summary.csv`; large times are from `benchmarks/results/large/summary.csv` (raw plans for all 3 runs alongside).
 
 | Query | Type | What it does | Seed (ms) | Large (ms) | Growth | Target | Met? |
 |---|---|---:|---:|---:|---:|:---:|:---:|
